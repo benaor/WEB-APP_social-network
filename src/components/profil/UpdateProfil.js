@@ -3,18 +3,21 @@ import { useDispatch, useSelector } from "react-redux"
 import { updateBio } from "../../actions/user.action"
 import { dateParser } from "../../utils/utils"
 import LeftNav from "../LeftNav"
+import FollowHandler from "./FollowHandler"
 import UploadImg from "./UploadImg"
 
 const UpdateProfil = () => {
-
   // State
   const [bio, setBio] = useState("")
   const [updateForm, setUpdateForm] = useState(false)
   const [followingPopup, setFollowingPopup] = useState(false)
   const [followersPopup, setFollowersPopup] = useState(false)
 
-  //Hooks
+  //import from store
   const userData = useSelector((state) => state.userReducer)
+  const usersData = useSelector((state) => state.usersReducer)
+
+  //Hooks
   const dispatch = useDispatch()
 
   //Handle
@@ -72,17 +75,62 @@ const UpdateProfil = () => {
           </h5>
         </div>
       </div>
-      {followersPopup && 
-      <div className="popup-profil-container">
-        <div className="modal">
-          <h3>Abonnements</h3>
-          <span onClick={() => setFollowersPopup(!followersPopup)} className="cross">&#10005;</span>
-          <ul>
-            
-          </ul>
+      {followersPopup && (
+        <div className="popup-profil-container">
+          <div className="modal">
+            <h3>Abonnements</h3>
+            <span
+              onClick={() => setFollowersPopup(!followersPopup)}
+              className="cross"
+            >
+              &#10005;
+            </span>
+            <ul>
+              {usersData.map((user) => {
+                for (let i = 0; i < userData.following.length; i++) {
+                  if (user._id == userData.following[i]) {
+                    return (
+                      <li key={user._id}>
+                        <img src={user.picture} alt="user-pic" />
+                        <h4>{user.pseudo}</h4>
+                        <FollowHandler idToFollow={user._id} />
+                      </li>
+                    )
+                  }
+                }
+              })}
+            </ul>
+          </div>
         </div>
-      </div>
-      }
+      )}
+      {followingPopup && (
+        <div className="popup-profil-container">
+          <div className="modal">
+            <h3>Abonnements</h3>
+            <span
+              onClick={() => setFollowingPopup(!followingPopup)}
+              className="cross"
+            >
+              &#10005;
+            </span>
+            <ul>
+              {usersData.map((user) => {
+                for (let i = 0; i < userData.followers.length; i++) {
+                  if (user._id === userData.followers[i]) {
+                    return (
+                      <li key={user._id}>
+                        <img src={user.picture} alt="user-pic" />
+                        <h4>{user.pseudo}</h4>
+                        <FollowHandler idToFollow={user._id} />
+                      </li>
+                    )
+                  }
+                }
+              })}
+            </ul>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
