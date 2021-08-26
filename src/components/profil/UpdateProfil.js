@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { updateBio } from "../../actions/user.action"
+import { dateParser } from "../../utils/utils"
 import LeftNav from "../LeftNav"
 import UploadImg from "./UploadImg"
 
@@ -26,24 +27,29 @@ const UpdateProfil = () => {
           <UploadImg />
         </div>
         <div className="right-part">
-          <h3>Bio</h3>
-          {updateForm === false ? (
-            <>
-              <p onClick={() => setUpdateForm(!updateForm)}>{userData.bio}</p>
-              <button onClick={() => setUpdateForm(!updateForm)}>
-                Modifier ma bio
-              </button>
-            </>
-          ) : (
-            <>
-              <textarea
-                type="text"
-                defaultValue={userData.bio}
-                onChange={(e) => setBio(e.target.value)}
-              ></textarea>
-              <button onClick={handleUpdate}>Valider les modifications</button>
-            </>
-          )}
+          <div className="bio-update">
+            <h3>Bio</h3>
+            {updateForm === false ? (
+              <>
+                <p onClick={() => setUpdateForm(!updateForm)}>{userData.bio}</p>
+                <button onClick={() => setUpdateForm(!updateForm)}>
+                  Modifier ma bio
+                </button>
+              </>
+            ) : (
+              <>
+                <textarea
+                  type="text"
+                  defaultValue={userData.bio}
+                  onChange={(e) => setBio(e.target.value)}
+                ></textarea>
+                <button onClick={handleUpdate}>
+                  Valider les modifications
+                </button>
+              </>
+            )}
+          </div>
+          <h4>Membre depuis le { dateParser(userData.createdAt)}</h4>
         </div>
       </div>
     </div>
