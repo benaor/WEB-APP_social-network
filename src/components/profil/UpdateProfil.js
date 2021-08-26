@@ -6,11 +6,18 @@ import LeftNav from "../LeftNav"
 import UploadImg from "./UploadImg"
 
 const UpdateProfil = () => {
+
+  // State
   const [bio, setBio] = useState("")
   const [updateForm, setUpdateForm] = useState(false)
+  const [followingPopup, setFollowingPopup] = useState(false)
+  const [followersPopup, setFollowersPopup] = useState(false)
+
+  //Hooks
   const userData = useSelector((state) => state.userReducer)
   const dispatch = useDispatch()
 
+  //Handle
   const handleUpdate = () => {
     dispatch(updateBio(userData._id, bio))
     setUpdateForm(false)
@@ -49,9 +56,33 @@ const UpdateProfil = () => {
               </>
             )}
           </div>
-          <h4>Membre depuis le { dateParser(userData.createdAt)}</h4>
+          <h4>
+            Membre depuis le{" "}
+            {userData.createdAt
+              ? dateParser(userData.createdAt)
+              : "début de l'aventure"}
+          </h4>
+          <h5 onClick={() => setFollowingPopup(!followingPopup)}>
+            Abonnements :{" "}
+            {userData.following ? userData.following.length : "Chargement"}
+          </h5>
+          <h5 onClick={() => setFollowersPopup(!followersPopup)}>
+            Abonnés :{" "}
+            {userData.followers ? userData.followers.length : "Chargement"}
+          </h5>
         </div>
       </div>
+      {followersPopup && 
+      <div className="popup-profil-container">
+        <div className="modal">
+          <h3>Abonnements</h3>
+          <span onClick={() => setFollowersPopup(!followersPopup)} className="cross">&#10005;</span>
+          <ul>
+            
+          </ul>
+        </div>
+      </div>
+      }
     </div>
   )
 }

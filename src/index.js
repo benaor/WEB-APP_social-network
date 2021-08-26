@@ -5,6 +5,7 @@ import { applyMiddleware, createStore } from "redux"
 import App from "./App"
 import "./styles/index.scss"
 import rootReducer from "./reducers"
+import { getUsers } from "./actions/users.action"
 
 //Devtools
 import { composeWithDevTools } from "redux-devtools-extension"
@@ -15,6 +16,8 @@ const store = createStore(
   rootReducer,
   composeWithDevTools(applyMiddleware(thunk))
 )
+
+store.dispatch(getUsers())
 
 ReactDOM.render(
   <Provider store={store}>
