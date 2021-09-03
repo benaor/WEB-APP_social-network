@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { updateBio } from "../../actions/user.action"
+import { updateBio } from "../../actions/user.actions"
 import { dateParser } from "../../utils/utils"
 import LeftNav from "../LeftNav"
 import FollowHandler from "./FollowHandler"
@@ -93,7 +93,9 @@ const UpdateProfil = () => {
                       <li key={user._id}>
                         <img src={user.picture} alt="user-pic" />
                         <h4>{user.pseudo}</h4>
-                        <FollowHandler idToFollow={user._id} />
+                        <div className="follow-handler">
+                          <FollowHandler idToFollow={user._id} />
+                        </div>
                       </li>
                     )
                   }
@@ -121,7 +123,9 @@ const UpdateProfil = () => {
                       <li key={user._id}>
                         <img src={user.picture} alt="user-pic" />
                         <h4>{user.pseudo}</h4>
-                        <FollowHandler idToFollow={user._id} />
+                        <div className="follow-handler">
+                          <FollowHandler idToFollow={user._id} />
+                        </div>
                       </li>
                     )
                   }

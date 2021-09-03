@@ -5,7 +5,7 @@ import { applyMiddleware, createStore } from "redux"
 import App from "./App"
 import "./styles/index.scss"
 import rootReducer from "./reducers"
-import { getUsers } from "./actions/users.action"
+import { getUsers } from "./actions/users.actions"
 
 //Devtools
 import { composeWithDevTools } from "redux-devtools-extension"

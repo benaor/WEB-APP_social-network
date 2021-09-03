@@ -3,7 +3,7 @@ import Routes from "./components/routes"
 import { UidContext } from "./components/AppContext"
 import axios from "axios"
 import { useDispatch } from "react-redux"
-import { getUser } from "./actions/user.action"
+import { getUser } from "./actions/user.actions"
 
 const App = () => {
   const [uid, setUid] = useState(null)
