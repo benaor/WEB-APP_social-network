@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { isEmpty } from "../../utils/utils"
 import { followUser, unfollowUser } from "../../actions/user.actions"
 
-const FollowHandler = ({ idToFollow }) => {
+const FollowHandler = ({ idToFollow, type }) => {
   // state
   const userData = useSelector((state) => state.userReducer)
   const [isFollowed, setIsFollowed] = useState(false)
@@ -33,16 +33,32 @@ const FollowHandler = ({ idToFollow }) => {
     <>
       {!isEmpty(userData) &&
         (isFollowed ? (
-          <span>
-            <button onClick={handleUnfollow} className="unfollow-btn">
-              Abonnés
-            </button>
+          <span onClick={handleUnfollow} c>
+            {type === "suggestion" && (
+              <button lassName="unfollow-btn">Abonnés</button>
+            )}
+            {type === "card" && (
+              <img
+                src="./img/icons/checked.svg"
+                alt="checked"
+                className="unfollow-btn"
+              />
+            )}
           </span>
         ) : (
-          <span>
-            <button onClick={handleFollow} className="follow-btn">
-              Suivre
-            </button>
+          <span onClick={handleFollow} >
+            {type === "suggestion" && (
+              <button className="follow-btn">
+                Suivre
+              </button>
+            )}
+            {type === "card" && (
+              <img
+                src="./img/icons/check.svg"
+                alt="check"
+                className="unfollow-btn"
+              />
+            )}
           </span>
         ))}
     </>
