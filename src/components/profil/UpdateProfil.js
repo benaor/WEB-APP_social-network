@@ -33,7 +33,7 @@ const UpdateProfil = () => {
       <div className="update-container">
         <div className="left-part">
           <h3>Photo de profil</h3>
-          <img src={userData.picture} alt="user-picture" />
+          <img src={userData.picture} alt="user-pic" />
           <UploadImg />
         </div>
         <div className="right-part">
@@ -88,18 +88,22 @@ const UpdateProfil = () => {
             <ul>
               {usersData.map((user) => {
                 for (let i = 0; i < userData.following.length; i++) {
-                  if (user._id == userData.following[i]) {
+                  if (user._id === userData.following[i]) {
                     return (
                       <li key={user._id}>
                         <img src={user.picture} alt="user-pic" />
                         <h4>{user.pseudo}</h4>
                         <div className="follow-handler">
-                          <FollowHandler idToFollow={user._id} type="suggestion" />
+                          <FollowHandler
+                            idToFollow={user._id}
+                            type="suggestion"
+                          />
                         </div>
                       </li>
                     )
                   }
                 }
+                return null
               })}
             </ul>
           </div>
@@ -124,12 +128,16 @@ const UpdateProfil = () => {
                         <img src={user.picture} alt="user-pic" />
                         <h4>{user.pseudo}</h4>
                         <div className="follow-handler">
-                          <FollowHandler idToFollow={user._id} type="suggestion" />
+                          <FollowHandler
+                            idToFollow={user._id}
+                            type="suggestion"
+                          />
                         </div>
                       </li>
                     )
                   }
                 }
+                return null
               })}
             </ul>
           </div>

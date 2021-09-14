@@ -12,7 +12,7 @@ const Card = ({ post }) => {
 
   useEffect(() => {
     !isEmpty(usersData[0]) && setIsLoading(false)
-  }, [userData])
+  }, [userData, usersData])
 
   return (
     <li className="card-container" key={post._id}>
@@ -27,10 +27,11 @@ const Card = ({ post }) => {
                 usersData
                   .map((user) => {
                     if (user._id === post.posterId) return user.picture
+                    else return null
                   })
                   .join("")
               }
-              alt="poster-picture"
+              alt="poster-pic"
             />
           </div>
           <div className="card-right">
@@ -40,6 +41,7 @@ const Card = ({ post }) => {
                   {!isEmpty(usersData[0]) &&
                     usersData.map((user) => {
                       if (user._id === post.posterId) return user.pseudo
+                      else return null
                     })}
                 </h3>
                 {post.posterId !== userData._id && (
@@ -50,7 +52,7 @@ const Card = ({ post }) => {
             </div>
             <p>{post.message}</p>
             {post.picture && (
-              <img src={post.picture} alt="card-picture" className="card-pic" />
+              <img src={post.picture} alt="card-pic" className="card-pic" />
             )}
             {post.video && (
               <iframe
@@ -64,12 +66,12 @@ const Card = ({ post }) => {
               ></iframe>
             )}
             <div className="card-footer">
-                <div className="comment-icon">
-                    <img src="./img/icons/message1.svg" alt="comment" />
-                    <span>{post.comments.length}</span>
-                </div>
-                <LikeButton post={post} />
-                <img src="./img/icons/share.svg" alt="share" />
+              <div className="comment-icon">
+                <img src="./img/icons/message1.svg" alt="comment" />
+                <span>{post.comments.length}</span>
+              </div>
+              <LikeButton post={post} />
+              <img src="./img/icons/share.svg" alt="share" />
             </div>
           </div>
         </>
