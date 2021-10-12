@@ -41,26 +41,27 @@ const NewPostForm = () => {
     setPostPicture(null)
     setFile("")
   }
-  const handleVideo = () => {
-    let findLink = message.split(" ")
-    for (let i = 0; i < findLink.length; i++) {
-      if (
-        findLink[i].includes("https://www.youtube") ||
-        findLink[i].includes("https://youtube")
-      ) {
-        let embed = findLink[i].replace("watch?v=", "embed/")
-        setPostVideo(embed.split("&")[0])
-        findLink.splice(i, 1)
-        setMessage(findLink.join(" "))
-        setPostPicture("")
-      }
-    }
-  }
 
   useEffect(() => {
+    const handleVideo = () => {
+      let findLink = message.split(" ")
+      for (let i = 0; i < findLink.length; i++) {
+        if (
+          findLink[i].includes("https://www.youtube") ||
+          findLink[i].includes("https://youtube")
+        ) {
+          let embed = findLink[i].replace("watch?v=", "embed/")
+          setPostVideo(embed.split("&")[0])
+          findLink.splice(i, 1)
+          setMessage(findLink.join(" "))
+          setPostPicture("")
+        }
+      }
+    }
+
     if (!isEmpty(userData)) setIsLoading(false)
     handleVideo()
-  }, [userData, message, postVideo, handleVideo])
+  }, [userData, message, postVideo])
 
   return (
     <div className="post-container">
