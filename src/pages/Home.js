@@ -4,6 +4,7 @@ import { UidContext } from "../components/AppContext"
 import LeftNav from "../components/LeftNav"
 import Log from "../components/log"
 import NewPostForm from "../components/post/NewPostForm"
+import FriendsHint from "../components/profil/FriendsHint"
 import Thread from "../components/Thread"
 import Trends from "../components/Trends"
 
@@ -23,6 +24,7 @@ const Home = () => {
         <div className="right-side-container">
           <div className="wrapper">
             <Trends />
+            {uid && <FriendsHint />}
           </div>
         </div>
       </div>
