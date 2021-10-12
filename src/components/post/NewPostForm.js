@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { NavLink } from "react-router-dom"
+import { addPost, getPosts } from "../../actions/post.actions"
 import { isEmpty, timestampParser } from "../../utils/utils"
 
 const NewPostForm = () => {
@@ -11,9 +12,28 @@ const NewPostForm = () => {
   const [file, setFile] = useState()
 
   const userData = useSelector((state) => state.userReducer)
+  const dispatch = useDispatch()
 
-  const handlePicture = () => {}
-  const handlePost = () => {}
+  const handlePicture = (e) => {
+    setPostPicture(URL.createObjectURL(e.target.files[0]))
+    setFile(e.target.files[0])
+    setPostVideo("")
+  }
+
+  const handlePost = async () => {
+    if (message || postPicture || postVideo) {
+      console.log("post")
+      const data = new FormData()
+      data.append("posterId", userData._id)
+      data.append("message", message)
+      if (file) data.append("file", file)
+      data.append("postVideo", postVideo)
+
+      await dispatch(addPost(data))
+      dispatch(getPosts())
+      handleCancel()
+    } else alert("Veuillez entrer un message")
+  }
   const handleCancel = () => {
     setMessage("")
     setPostVideo("")
@@ -125,9 +145,7 @@ const NewPostForm = () => {
                   </>
                 )}
                 {postVideo && (
-                  <button onClick={() => setPostVideo("")}>
-                    Suppr. vidéo
-                  </button>
+                  <button onClick={() => setPostVideo("")}>Suppr. vidéo</button>
                 )}
               </div>
               <div className="btn-send">
