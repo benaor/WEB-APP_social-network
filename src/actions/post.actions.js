@@ -13,6 +13,9 @@ export const ADD_COMMENT = "ADD_COMMENT"
 export const EDIT_COMMENT = "EDIT_COMMENT"
 export const DELETE_COMMENT = "DELETE_COMMENT"
 
+// Errors
+export const GET_POST_ERRORS = "GET_POST_ERRORS"
+
 export const getPosts = (num) => {
   return (dispatch) => {
     axios
@@ -29,6 +32,14 @@ export const addPost = (data) => {
   return (dispatch) => {
     return axios
       .post(`${process.env.REACT_APP_API_URL}api/post/`, data)
+      .then((res) => {
+        if (res.data.errors)
+          dispatch({ type: GET_POST_ERRORS, payload: res.data.errors })
+        else dispatch({ GET_POST_ERRORS, payload: "" })
+      })
+      .catch((err) => {
+        console.error(err)
+      })
   }
 }
 
@@ -110,12 +121,13 @@ export const editComment = (postId, commentId, text) => {
   }
 }
 
-export const deleteComment = (postId, commentId ) => {
+export const deleteComment = (postId, commentId) => {
   return (dispatch) => {
     return axios({
       method: "patch",
       url:
-        `${process.env.REACT_APP_API_URL}api/post/delete-comment-post/` + postId,
+        `${process.env.REACT_APP_API_URL}api/post/delete-comment-post/` +
+        postId,
       data: { commentId }
     })
       .then((res) =>

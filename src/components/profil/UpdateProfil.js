@@ -16,6 +16,7 @@ const UpdateProfil = () => {
   //import from store
   const userData = useSelector((state) => state.userReducer)
   const usersData = useSelector((state) => state.usersReducer)
+  const error = useSelector(state => state.errorReducer.userError)
 
   //Hooks
   const dispatch = useDispatch()
@@ -35,6 +36,8 @@ const UpdateProfil = () => {
           <h3>Photo de profil</h3>
           <img src={userData.picture} alt="user-pic" />
           <UploadImg />
+          <p>{error?.maxSize}</p>
+          <p>{error?.format}</p>
         </div>
         <div className="right-part">
           <div className="bio-update">

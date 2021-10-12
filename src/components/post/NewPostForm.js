@@ -12,6 +12,7 @@ const NewPostForm = () => {
   const [file, setFile] = useState()
 
   const userData = useSelector((state) => state.userReducer)
+  const error = useSelector((state) => state.errorReducer.postError)
   const dispatch = useDispatch()
 
   const handlePicture = (e) => {
@@ -59,7 +60,7 @@ const NewPostForm = () => {
   useEffect(() => {
     if (!isEmpty(userData)) setIsLoading(false)
     handleVideo()
-  }, [userData, message, postVideo])
+  }, [userData, message, postVideo, handleVideo])
 
   return (
     <div className="post-container">
@@ -148,6 +149,8 @@ const NewPostForm = () => {
                   <button onClick={() => setPostVideo("")}>Suppr. vidéo</button>
                 )}
               </div>
+              {!isEmpty(error.format) && <p>{error.format}</p>}
+              {!isEmpty(error.maxSize) && <p>{error.maxSize}</p>}
               <div className="btn-send">
                 {message || postPicture || postVideo.length > 10 ? (
                   <button className="cancel" onClick={handleCancel}>
